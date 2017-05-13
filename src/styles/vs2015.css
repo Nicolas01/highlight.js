@@ -23,8 +23,7 @@
 }
 
 .hljs-built_in,
-.hljs-type,
-.css .hljs-number {
+.hljs-type {
   color: #4EC9B0;
 }
 
@@ -47,8 +46,7 @@
 .hljs-function,
 .hljs-title,
 .hljs-params,
-.hljs-formula,
-.css .hljs-built_in {
+.hljs-formula {
   color: #DCDCDC;
 }
 
@@ -66,10 +64,6 @@
 .hljs-meta-keyword,
 .hljs-tag {
   color: #9B9B9B;
-}
-.diff .hljs-comment {
-  color: #9B9B9B;
-  font-style: italic;
 }
 
 .hljs-variable,
@@ -118,4 +112,19 @@
   background-color: #600;
   display: inline-block;
   width: 100%;
+}
+
+/* language specific rules */
+.css .hljs-number,
+.lang-css .hljs-number {
+  color: #4EC9B0;
+}
+.css .hljs-built_in,
+.lang-css .hljs-built_in {
+  color: #DCDCDC;
+}
+.diff .hljs-comment,
+.lang-diff .hljs-comment {
+  color: #9B9B9B;
+  font-style: italic;
 }

@@ -166,7 +166,7 @@ function(hljs) {
       {
         // assignation: MyClass mc =
         // foreach (MyClass mc in mcList)
-        begin: '\\b[A-Z]\\w*(\\[\\])?\\s[a-z]\\w*\\s(=|in)', returnBegin: true,
+        begin: '\\b[A-Z]\\w*((\\[\\])|\\?)?\\s[a-z]\\w*\\s(=|in)', returnBegin: true,
         end: '\\s', excludeEnd: true,
         contains: [
           GENERIC_MODE,

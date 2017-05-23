@@ -174,13 +174,23 @@ function(hljs) {
           },
           {
             className: 'params',
-            begin: /\(/, end: /\)/,
+            begin: '\\(', end: '\\)',
             excludeBegin: true,
             excludeEnd: true,
             keywords: KEYWORDS,
             relevance: 0,
             contains: [
-              STRING,
+              //STRING,
+              {
+                className: 'class',
+                begin: '\\bI[A-Z]\\w*',
+                relevance: 0
+              },
+              {
+                className: 'type',
+                begin: '\\b[A-Z]\\w*',
+                relevance: 0
+              },
               hljs.C_NUMBER_MODE,
               hljs.C_BLOCK_COMMENT_MODE
             ]

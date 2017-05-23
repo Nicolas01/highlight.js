@@ -176,7 +176,8 @@ function(hljs) {
       },
       {
         // typeof
-        begin: '\\btypeof\\(', returnBegin: true,
+        // default
+        begin: '\\b(typeof|default)\\(', returnBegin: true,
         end: '\\)', excludeEnd: true,
         keywords: KEYWORDS,
         contains: [

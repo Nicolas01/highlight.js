@@ -2,6 +2,8 @@ using System.IO.Compression;
 
 namespace MyApplication
 {
+    interface IInterface { }
+
     class Program : IInterface
     {
         /// <summary>
@@ -23,6 +25,31 @@ namespace MyApplication
               MyClass mc = new MyClass(myVariable, MyProperty, myVariable.MyProperty);
               IMyInterface mi = MyClass<IMyInterface>.Create(new MyClass("test"));
               MyClass.MyStaticMethod(myVariable, MyProperty, myVariable.MyProperty);
+              List<int> li = new List<int>() { 1, 2, 3 };
+              MyClass[] amc = new MyClass[] { 1, 2, 3 };
+
+              MyClass mc = mc;
+              Myclass mc = mc;
+
+              Type t = typeof(MyClass);
+              Type t = typeof(IInterface);
+              Type t = typeof(MyClass<int>);
+              Type t = typeof(IInterface<int>);
+              Type t = typeof(MyClass<IInterface>);
+
+              DateTime d = new DateTime();
+              DateTime? d = null;
+
+              var engine = new FileHelperAsyncEngine<DailyValue>();
+
+              Contract.Requires<ArgumentNullException>(argument != null);
+
+              var un_objet = Session["clé"] as MaClasse;
+
+              catch (Exception ex)
+              {
+                  lbStatus.Text = "Error: " + ex.Message;
+              }
             }
             else if (b == false)
             {
@@ -39,14 +66,24 @@ namespace MyApplication
             {
             }
 
+            foreach (MyClass mc in mcList)
+            {
+            }
+
             using (GZipStream s = new GZipStream(fs, CompressionMode.Decompress))
             {
             }
         }
 
         [DataMember("")]
-        private List<int> MyMethod(MaClasse mc, MaClasse<int> mci)
+        private List<int> MyMethod(MaClasse mc, MaClasse<int> mci, IInterface ii, MaClasse<MaClasse> mcmc)
         {
+        }
+
+        public void Methode(DateTime date1 = default(DateTime), DateTime? date2 = null)
+        {
+            if (date1 == default(DateTime)) date1 = new DateTime(...);
+            if (date2 == null) date2 = new DateTime(...);
         }
     }
 }

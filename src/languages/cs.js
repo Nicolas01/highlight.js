@@ -77,6 +77,17 @@ function(hljs) {
     ]
   };
 
+  var INTERFACE_MODE = {
+    className: 'class',
+    begin: '\\bI[A-Z]\\w*',
+    relevance: 0
+  };
+  var TYPE_MODE = {
+    className: 'type',
+    begin: '\\b[A-Z]\\w*',
+    relevance: 0
+  };
+
   var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
   return {
     aliases: ['csharp'],
@@ -119,16 +130,8 @@ function(hljs) {
         beginKeywords: 'class', end: /[{;=]/,
         illegal: /[^\s:]/,
         contains: [
-          {
-            className: 'class',
-            begin: 'I[A-Z]\\w*',
-            relevance: 0
-          },
-          {
-            className: 'type',
-            begin: hljs.IDENT_RE,
-            relevance: 0
-          },
+          INTERFACE_MODE,
+          TYPE_MODE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
         ]
@@ -137,11 +140,7 @@ function(hljs) {
         beginKeywords: 'interface', end: /[{;=]/,
         illegal: /[^\s:]/,
         contains: [
-          {
-            className: 'class',
-            begin: hljs.IDENT_RE,
-            relevance: 0
-          },
+          TYPE_MODE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
         ]
@@ -174,7 +173,9 @@ function(hljs) {
         contains: [
           {
             begin: hljs.IDENT_RE + '\\s*\\(', returnBegin: true,
-            contains: [hljs.TITLE_MODE],
+            contains: [
+              hljs.TITLE_MODE
+            ],
             relevance: 0
           },
           {
@@ -185,17 +186,8 @@ function(hljs) {
             keywords: KEYWORDS,
             relevance: 0,
             contains: [
-              //STRING,
-              {
-                className: 'class',
-                begin: '\\bI[A-Z]\\w*',
-                relevance: 0
-              },
-              {
-                className: 'type',
-                begin: '\\b[A-Z]\\w*',
-                relevance: 0
-              },
+              INTERFACE_MODE,
+              TYPE_MODE,
               hljs.C_NUMBER_MODE,
               hljs.C_BLOCK_COMMENT_MODE
             ]

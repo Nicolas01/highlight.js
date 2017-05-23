@@ -1,11 +1,52 @@
-using System;
+using System.IO.Compression;
 
-#pragma warning disable 414, 3021
-
-/// <summary>Main task</summary>
-async Task<int, int> AccessTheWebAsync()
+namespace MyApplication
 {
-    Console.WriteLine("Hello, World!");
-    string urlContents = await getStringTask;
-    return urlContents.Length;
+    class Program : IInterface
+    {
+        /// <summary>
+        /// Main method
+        /// </summary>
+        /// <param name="args"></param>
+        static void Main(string[] args)
+        {
+            // comment
+            /* multi-lines
+             * comment
+             */
+            Console.WriteLine($"Hello {Name}!");
+
+            if (b == true)
+            {
+              // FIXME
+              MyClass mc;
+              MyClass mc = new MyClass(myVariable, MyProperty, myVariable.MyProperty);
+              IMyInterface mi = MyClass<IMyInterface>.Create(new MyClass("test"));
+              MyClass.MyStaticMethod(myVariable, MyProperty, myVariable.MyProperty);
+            }
+            else if (b == false)
+            {
+              var query = from p in entities.Persons
+                          select new { First = p.FirstName, Last = p.LastName };
+            }
+            else
+            {
+              MyProperty = "value";
+              MyMethod(myVariable, MyProperty, myVariable.MyProperty);
+            }
+
+            foreach (MyClass<int> mc in mcList)
+            {
+            }
+
+            using (GZipStream s = new GZipStream(fs, CompressionMode.Decompress))
+            {
+            }
+        }
+
+        [DataMember("")]
+        private List<int> MyMethod(MaClasse mc, MaClasse<int> mci)
+        {
+        }
+    }
 }

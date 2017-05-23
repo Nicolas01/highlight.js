@@ -162,7 +162,7 @@ function(hljs) {
       },
       {
         // assignation: MyClass mc =
-        begin: '\\b[A-Z]\\w*(\\[\\])?\\s[a-z]+\\s=', returnBegin: true,
+        begin: '\\b[A-Z]\\w*(\\[\\])?\\s[a-z]\\w*\\s=', returnBegin: true,
         end: '\\s\\w', excludeEnd: true,
         contains: [
           GENERIC_MODE,

@@ -180,6 +180,16 @@ function(hljs) {
           TYPE_MODE
         ]
       },
+      {
+        // as
+        begin: '\\sas\\s',
+        keywords: KEYWORDS,
+        contains: [
+          GENERIC_MODE,
+          INTERFACE_MODE,
+          TYPE_MODE
+        ]
+      },
       GENERIC_MODE,
       {
         // Expression keywords prevent 'keyword Name(...)' from being

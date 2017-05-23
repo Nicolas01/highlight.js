@@ -156,6 +156,11 @@ function(hljs) {
         ]
       },
       {
+        // new MaClasse();
+        className: 'type',
+        beginKeywords: 'new', end: '[\\(\\{]', excludeEnd: true
+      },
+      {
         // Expression keywords prevent 'keyword Name(...)' from being
         // recognized as a function definition
         beginKeywords: 'new return throw await',

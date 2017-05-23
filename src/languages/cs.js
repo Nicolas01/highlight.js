@@ -87,6 +87,15 @@ function(hljs) {
     begin: '\\b[A-Z]\\w*',
     relevance: 0
   };
+  var GENERIC_MODE = {
+    begin: '\\b[A-Z]\\w*<\\w+', returnBegin: true,
+    end: '>', excludeEnd: true,
+    keywords: KEYWORDS,
+    contains: [
+      INTERFACE_MODE,
+      TYPE_MODE
+    ]
+  };
 
   var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
   return {
@@ -127,19 +136,11 @@ function(hljs) {
       STRING,
       hljs.C_NUMBER_MODE,
       {
-        beginKeywords: 'class', end: /[{;=]/,
+        beginKeywords: 'class interface', end: /[{;=]/,
         illegal: /[^\s:]/,
         contains: [
+          GENERIC_MODE,
           INTERFACE_MODE,
-          TYPE_MODE,
-          hljs.C_LINE_COMMENT_MODE,
-          hljs.C_BLOCK_COMMENT_MODE
-        ]
-      },
-      {
-        beginKeywords: 'interface', end: /[{;=]/,
-        illegal: /[^\s:]/,
-        contains: [
           TYPE_MODE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
@@ -160,15 +161,26 @@ function(hljs) {
         beginKeywords: 'new', end: '[\\(\\{]', excludeEnd: true
       },
       {
-        // generics: List<int>
-        begin: '\\b[A-Z]\\w*<\\w+', returnBegin: true,
-        end: '>', excludeEnd: true,
-        keywords: KEYWORDS,
+        // assignation: MyClass mc =
+        begin: '\\b[A-Z]\\w*(\\[\\])?\\s[a-z]+\\s=', returnBegin: true,
+        end: '\\s\\w', excludeEnd: true,
         contains: [
+          GENERIC_MODE,
           INTERFACE_MODE,
           TYPE_MODE
         ]
       },
+      {
+        // typeof
+        begin: '\\btypeof\\(', returnBegin: true,
+        end: '\\)', excludeEnd: true,
+        contains: [
+          GENERIC_MODE,
+          INTERFACE_MODE,
+          TYPE_MODE
+        ]
+      },
+      GENERIC_MODE,
       {
         // Expression keywords prevent 'keyword Name(...)' from being
         // recognized as a function definition

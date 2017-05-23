@@ -190,6 +190,16 @@ function(hljs) {
           TYPE_MODE
         ]
       },
+      {
+        // catch (Exception ex)
+        begin: '\\bcatch\\s*\\(',
+        keywords: KEYWORDS,
+        contains: [
+          GENERIC_MODE,
+          INTERFACE_MODE,
+          TYPE_MODE
+        ]
+      },
       GENERIC_MODE,
       {
         // Expression keywords prevent 'keyword Name(...)' from being

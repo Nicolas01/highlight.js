@@ -160,6 +160,16 @@ function(hljs) {
         beginKeywords: 'new', end: '[\\(\\{]', excludeEnd: true
       },
       {
+        // generics: List<int>
+        begin: '\\b[A-Z]\\w*<\\w+', returnBegin: true,
+        end: '>', excludeEnd: true,
+        keywords: KEYWORDS,
+        contains: [
+          INTERFACE_MODE,
+          TYPE_MODE
+        ]
+      },
+      {
         // Expression keywords prevent 'keyword Name(...)' from being
         // recognized as a function definition
         beginKeywords: 'new return throw await',

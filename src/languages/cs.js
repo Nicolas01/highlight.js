@@ -19,7 +19,11 @@ function(hljs) {
       'add alias ascending async await by descending dynamic equals from get global group into join ' +
       'let on orderby partial remove select set value var where yield',
     literal:
-      'null false true'
+      'null false true',
+    type:
+      // Known static class
+      'AppDomain Application Assembly Console Contract Convert Encoding Environment File Guid ' +
+      'Path String Task'
   };
 
   var VERBATIM_STRING = {

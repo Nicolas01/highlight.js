@@ -175,6 +175,7 @@ function(hljs) {
         // typeof
         begin: '\\btypeof\\(', returnBegin: true,
         end: '\\)', excludeEnd: true,
+        keywords: KEYWORDS,
         contains: [
           GENERIC_MODE,
           INTERFACE_MODE,

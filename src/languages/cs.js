@@ -157,8 +157,11 @@ function(hljs) {
       },
       {
         // new MaClasse();
-        className: 'type',
-        beginKeywords: 'new', end: '[\\(\\{\\[<]', excludeEnd: true
+        beginKeywords: 'new', end: '[\\(\\{\\[<]', excludeEnd: true,
+        contains: [
+          GENERIC_MODE,
+          TYPE_MODE
+        ]
       },
       {
         // assignation: MyClass mc =

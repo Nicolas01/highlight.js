@@ -29,6 +29,7 @@ function(hljs) {
     contains: [
       hljs.COMMENT(';', '$'),
       hljs.HASH_COMMENT_MODE,
+      hljs.C_LINE_COMMENT_MODE,
       {
         className: 'section',
         begin: /^\s*\[+/, end: /\]+/

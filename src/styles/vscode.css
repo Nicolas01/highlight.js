@@ -1,0 +1,46 @@
+/*
+ * Visual Studio Code - Dark+ color theme
+ * Author: Nicolas LLOBERA <nicolas@bananeatomic.fr>
+ */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #1E1E1E;
+  color: #D4D4D4;
+}
+
+.hljs-keyword,
+.hljs-literal {
+  color: #569CD6;
+}
+
+.hljs-title,
+.hljs-meta,
+.hljs-common_static_class {
+  color: #4EC9B0;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-doctag {
+  color: #6A9955;
+}
+
+.hljs-string,
+.hljs-meta-string {
+  color: #CE9178;
+}
+
+.hljs-subst {
+  color: #9CDCFE;
+}
+
+.hljs-number {
+  color: #B5CEA8;
+}
+
+.hljs-method-name {
+  color: #DCDCAA;
+}

@@ -7,76 +7,72 @@ Category: common
 */
 
 export default function(hljs) {
+  
   var KEYWORDS = {
     keyword:
       // Normal keywords.
-      'abstract as base bool break byte case catch char checked const continue decimal ' +
+      'abstract as base bool break byte case catch char checked class const continue decimal ' +
       'default delegate do double enum event explicit extern finally fixed float ' +
-      'for foreach goto if implicit in int interface internal is lock long ' +
+      'for foreach goto implicit in int interface internal is lock long namespace new ' +
       'object operator out override params private protected public readonly ref sbyte ' +
       'sealed short sizeof stackalloc static string struct switch this try typeof ' +
       'uint ulong unchecked unsafe ushort using virtual void volatile while ' +
       // Contextual keywords.
       'add alias ascending async await by descending dynamic equals from get global group into join ' +
-      'let nameof on orderby partial remove select set value var when where yield',
+      'let nameof on orderby param partial remove select set value var when where yield ' +
+      // XML doc keywords.
+      'returns see summary',
+    statement:
+      'if else return',
     literal:
-      'null false true'
+      'null false true',
+    commonclass:
+      'Char Console Encoding Enumerable HttpStatusCode String Task'
   };
-  var TITLE_MODE = hljs.inherit(hljs.TITLE_MODE, {begin: '[a-zA-Z](\\.?\\w)*'});
-  var NUMBERS = {
-    className: 'number',
-    variants: [
-      { begin: '\\b(0b[01\']+)' },
-      { begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)(u|U|l|L|ul|UL|f|F|b|B)' },
-      { begin: '(-?)(\\b0[xX][a-fA-F0-9\']+|(\\b[\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)([eE][-+]?[\\d\']+)?)' }
-    ],
-    relevance: 0
+  
+  var INTERPOLATED_VERBATIM_STRING = {
+    className: 'string',
+    begin: '\\$@"', end: '"',
+    contains: [
+      { begin: '""' },
+      { begin: '{{' }, { begin: '}}' },
+      {
+        begin: '{', excludeBegin: true,
+        end: '}', excludeEnd: true,
+        contains: [
+          {
+            className: 'var',
+            begin: hljs.IDENT_RE
+          }
+        ]
+      }
+    ]
   };
+  
+  var INTERPOLATED_STRING = {
+    className: 'string',
+    begin: '\\$"', end: '"',
+    contains: [
+      { begin: '{{' }, { begin: '}}' },
+      {
+        begin: '{', excludeBegin: true,
+        end: '}', excludeEnd: true,
+        contains: [
+          {
+            className: 'var',
+            begin: hljs.IDENT_RE
+          }
+        ]
+      }
+    ]
+  };
+  
   var VERBATIM_STRING = {
     className: 'string',
     begin: '@"', end: '"',
     contains: [{begin: '""'}]
   };
-  var VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, {illegal: /\n/});
-  var SUBST = {
-    className: 'subst',
-    begin: '{', end: '}',
-    keywords: KEYWORDS
-  };
-  var SUBST_NO_LF = hljs.inherit(SUBST, {illegal: /\n/});
-  var INTERPOLATED_STRING = {
-    className: 'string',
-    begin: /\$"/, end: '"',
-    illegal: /\n/,
-    contains: [{begin: '{{'}, {begin: '}}'}, hljs.BACKSLASH_ESCAPE, SUBST_NO_LF]
-  };
-  var INTERPOLATED_VERBATIM_STRING = {
-    className: 'string',
-    begin: /\$@"/, end: '"',
-    contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST]
-  };
-  var INTERPOLATED_VERBATIM_STRING_NO_LF = hljs.inherit(INTERPOLATED_VERBATIM_STRING, {
-    illegal: /\n/,
-    contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST_NO_LF]
-  });
-  SUBST.contains = [
-    INTERPOLATED_VERBATIM_STRING,
-    INTERPOLATED_STRING,
-    VERBATIM_STRING,
-    hljs.APOS_STRING_MODE,
-    hljs.QUOTE_STRING_MODE,
-    NUMBERS,
-    hljs.C_BLOCK_COMMENT_MODE
-  ];
-  SUBST_NO_LF.contains = [
-    INTERPOLATED_VERBATIM_STRING_NO_LF,
-    INTERPOLATED_STRING,
-    VERBATIM_STRING_NO_LF,
-    hljs.APOS_STRING_MODE,
-    hljs.QUOTE_STRING_MODE,
-    NUMBERS,
-    hljs.inherit(hljs.C_BLOCK_COMMENT_MODE, {illegal: /\n/})
-  ];
+  
   var STRING = {
     variants: [
       INTERPOLATED_VERBATIM_STRING,
@@ -86,43 +82,62 @@ export default function(hljs) {
       hljs.QUOTE_STRING_MODE
     ]
   };
-
-  var GENERIC_MODIFIER = {
-    begin: "<",
-    end: ">",
-    keywords: "in out"
-  };
-  var TYPE_IDENT_RE = hljs.IDENT_RE + '(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
-  var AT_IDENTIFIER = {
-    // prevents expressions like `@class` from incorrect flagging
-    // `class` as a keyword
-    begin: "@" + hljs.IDENT_RE,
+  
+  var NUMBERS = {
+    className: 'number',
+    variants: [
+      { begin: '\\b(0b[01\']+)' },
+      { begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)(u|U|l|L|ul|UL|f|F|b|B)' },
+      { begin: '(-?)(\\b0[xX][a-fA-F0-9\']+|(\\b[\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)([eE][-+]?[\\d\']+)?)' }
+    ],
     relevance: 0
   };
-
+  
+  // Type, Type?, Type[], Type<int>, Type<Type>, Type<Type<int, Type>>
+  //var TYPE_RE = '[A-Z]\\w*' + '\\??(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?(\\[\\])?';
+  var TYPE_RE = '[A-Z]\\w*' + '\\??(<' + hljs.IDENT_RE + '[<>a-zA-Z\\[\\]\\?\\ ,]*>)?(\\[\\])?';
+  var TYPE = {
+    begin: TYPE_RE, returnBegin: true,
+    contains: [
+      {
+        className: 'class',
+        begin: '[A-Z]\\w*'
+      },
+      {
+        className: 'xxx',
+        begin: '<', excludeBegin: true,
+        end: '>', excludeEnd: true,
+        keywords: KEYWORDS,
+        contains: [
+          {
+            className: 'class',
+            begin: '[A-Z]\\w*',
+            keywords: KEYWORDS
+          }
+        ]
+      }
+    ]
+  };
+  
   return {
     name: 'C#',
     aliases: ['cs', 'c#'],
     keywords: KEYWORDS,
-    illegal: /::/,
     contains: [
       hljs.COMMENT(
-        '///',
-        '$',
+        '///', '$',
         {
-          returnBegin: true,
           contains: [
             {
-              className: 'doctag',
-              variants: [
+              className: 'doctag-outer',
+              begin: '</?',
+              end: '>',
+              keywords: KEYWORDS,
+              contains: [
+                hljs.QUOTE_STRING_MODE,
                 {
-                  begin: '///', relevance: 0
-                },
-                {
-                  begin: '<!--|-->'
-                },
-                {
-                  begin: '</?', end: '>'
+                  className: 'doctag-param-name',
+                  begin: ' [a-z]+', end: '=', excludeEnd: true,
                 }
               ]
             }
@@ -131,78 +146,146 @@ export default function(hljs) {
       ),
       hljs.C_LINE_COMMENT_MODE,
       hljs.C_BLOCK_COMMENT_MODE,
-      {
-        className: 'meta',
-        begin: '#', end: '$',
-        keywords: {
-          'meta-keyword': 'if else elif endif define undef warning error line region endregion pragma checksum'
-        }
-      },
       STRING,
       NUMBERS,
-      {
-        beginKeywords: 'class interface', end: /[{;=]/,
-        illegal: /[^\s:,]/,
+      /*{
+        begin: 'using', excludeBegin: true,
+        end: '[;{]',
         contains: [
-          { beginKeywords: "where class" },
-          TITLE_MODE,
-          GENERIC_MODIFIER,
-          hljs.C_LINE_COMMENT_MODE,
-          hljs.C_BLOCK_COMMENT_MODE
+          {
+            className: 'using-declaration',
+            begin: '\\(', end: '\\)'
+          },
+          {
+            className: 'namespace',
+            begin: '[A-Z]\\w*'
+          }
+        ]
+      },*/
+      {
+        begin: 'namespace', excludeBegin: true,
+        end: '{', excludeEnd: true,
+        contains: [
+          {
+            className: 'namespace',
+            begin: '[A-Z]\\w*'
+          }
         ]
       },
       {
-        beginKeywords: 'namespace', end: /[{;=]/,
-        illegal: /[^\s:]/,
-        contains: [
-          TITLE_MODE,
-          hljs.C_LINE_COMMENT_MODE,
-          hljs.C_BLOCK_COMMENT_MODE
-        ]
-      },
-      {
-        // [Attributes("")]
-        className: 'meta',
-        begin: '^\\s*\\[', excludeBegin: true, end: '\\]', excludeEnd: true,
-        contains: [
-          {className: 'meta-string', begin: /"/, end: /"/}
-        ]
-      },
-      {
-        // Expression keywords prevent 'keyword Name(...)' from being
-        // recognized as a function definition
-        beginKeywords: 'new return throw await else',
-        relevance: 0
-      },
-      {
-        className: 'function',
-        begin: '(' + TYPE_IDENT_RE + '\\s+)+' + hljs.IDENT_RE + '\\s*\\(', returnBegin: true,
-        end: /\s*[{;=]/, excludeEnd: true,
+        begin: '\\bclass', excludeBegin: true,
+        end: '{', excludeEnd: true,
         keywords: KEYWORDS,
         contains: [
           {
-            begin: hljs.IDENT_RE + '\\s*\\(', returnBegin: true,
-            contains: [hljs.TITLE_MODE],
-            relevance: 0
-          },
-          {
-            className: 'params',
-            begin: /\(/, end: /\)/,
-            excludeBegin: true,
-            excludeEnd: true,
-            keywords: KEYWORDS,
-            relevance: 0,
-            contains: [
-              STRING,
-              NUMBERS,
-              hljs.C_BLOCK_COMMENT_MODE
-            ]
+            className: 'class',
+            begin: '[A-Z]\\w*'
           },
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
         ]
       },
-      AT_IDENTIFIER
+      {
+        begin: 'interface', excludeBegin: true,
+        end: '{', excludeEnd: true,
+        keywords: KEYWORDS,
+        contains: [
+          {
+            className: 'interface',
+            begin: 'I[A-Z]\\w*'
+          },
+          hljs.C_LINE_COMMENT_MODE,
+          hljs.C_BLOCK_COMMENT_MODE
+        ]
+      },
+      {
+        // Type _varName
+        // Type PropertyName
+        className: 'typeandvarname',
+        begin: '\\b' + TYPE_RE + ' [_a-zA-Z]\\w*', returnBegin: true,
+        contains: [
+          TYPE
+        ]
+      },
+      {
+        // attribute
+        begin: '\\[[A-Z]\\w*', returnBegin: true,
+        end: '\\]',
+        keywords: KEYWORDS,
+        contains: [
+          STRING,
+          TYPE
+        ]
+      },
+      {
+        begin: 'new ', excludeBegin: true,
+        end: '[\\({]', excludeEnd: true,
+        keywords: KEYWORDS,
+        contains: [
+          TYPE
+        ]
+      },
+      {
+        // (Type)
+        begin: '\\(' + TYPE_RE + '\\)', returnBegin: true,
+        contains: [
+          {
+            begin: '\\(', excludeBegin: true,
+            end: '\\)', excludeEnd: true,
+            contains: [ TYPE ]
+          }
+        ]
+      },
+      {
+        // Method<Type>(
+        begin: '[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\(', returnBegin: true,
+        contains: [
+          {
+            className: 'method-name',
+            begin: '[A-Z]\\w*'
+          },
+          {
+            begin: '<', excludeBegin: true,
+            end: '>', excludeEnd: true,
+            keywords: KEYWORDS,
+            contains: [ TYPE ]
+          }
+        ]
+      }/*,
+      {
+        className: 'others',
+        begin: '[a-zA-Z]\\w*'
+      }*/
+      /*{
+        className: 'method',
+        begin: '[A-Z]\\w*\\(', returnBegin: true,
+        end: '[{;]',
+        contains: [
+          {
+            begin: '[A-Z]\\w*\\(', returnBegin: true,
+            contains: [
+              {
+                className: 'method-name',
+                begin: '[A-Z]\\w*'
+              }
+            ]
+          },
+          {
+            className: 'method-param',
+            begin: '\\(', excludeBegin: true,
+            end: '\\)', excludeEnd: true,
+            contains: [
+              STRING,
+              TYPE,
+              {
+                className: 'method-param-name',
+                begin: '[a-z]\\w*',
+                keywords: KEYWORDS
+              }
+            ]
+          }
+        ]
+      }*/
     ]
   };
 }

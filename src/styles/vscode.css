@@ -12,9 +12,53 @@
 }
 
 .hljs-keyword,
-.hljs-literal {
+.hljs-literal,
+.hljs-doctag {
   color: #569CD6;
 }
+
+.hljs-statement {
+  color: #C586C0;
+}
+
+.hljs-doctag-outer {
+  color: #808079;
+}
+
+.hljs-commonclass,
+.hljs-doctag-param-name,
+.hljs-method-param-name,
+.hljs-var {
+  color: #9CDCFE;
+}
+
+.hljs-namespace,
+.hljs-class,
+.hljs-interface {
+  color: #4EC9B0;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6A9955;
+}
+
+.hljs-method-name {
+  color: #DCDCAA;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .hljs-title,
 .hljs-meta,
@@ -22,11 +66,7 @@
   color: #4EC9B0;
 }
 
-.hljs-comment,
-.hljs-quote,
-.hljs-doctag {
-  color: #6A9955;
-}
+
 
 .hljs-string,
 .hljs-meta-string {
@@ -41,6 +81,4 @@
   color: #B5CEA8;
 }
 
-.hljs-method-name {
-  color: #DCDCAA;
-}
+

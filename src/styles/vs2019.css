@@ -120,3 +120,24 @@
   display: inline-block;
   width: 100%;
 }
+
+/* tsql class */
+.hljs-tsql-literal {
+  color: #9B9B9B; /* dark grey */
+}
+
+.hljs-tsql-symbol {
+  color: #DCDCDC; /* white */
+}
+
+.hljs-tsql-string {
+  color: #CB4141; /* red */
+}
+
+.hljs-tsql-built_in {
+  color: #C975D5; /* violet */
+}
+
+.hljs-tsql-sp {
+  color: #B3725B; /* dark orange */
+}

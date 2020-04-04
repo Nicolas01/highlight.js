@@ -16,7 +16,8 @@ Microsoft SQL Server Management Studio (SSMS)-like style by David Simner <david.
   color: #569CD6; /* blue */
 }
 
-.hljs-symbol {
+.hljs-symbol,
+.hljs-tsql-symbol {
   color: #DCDCDC; /* white */
 }
 
@@ -24,7 +25,8 @@ Microsoft SQL Server Management Studio (SSMS)-like style by David Simner <david.
   color: #B9E873; /* light green */
 }
 
-.hljs-string {
+.hljs-string,
+.hljs-tsql-string {
   color: #CB4141; /* red */
 }
 
@@ -32,11 +34,13 @@ Microsoft SQL Server Management Studio (SSMS)-like style by David Simner <david.
   color: #B5CEA8; /* pale green */
 }
 
-.hljs-built_in {
+.hljs-built_in,
+.hljs-tsql-built_in {
   color: #C975D5; /* violet */
 }
 
-.hljs-function {
+.hljs-function,
+.hljs-tsql-sp {
   color: #B3725B; /* dark orange */
 }
 

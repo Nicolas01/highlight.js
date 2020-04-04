@@ -503,7 +503,7 @@ function(hljs) {
       relevance: 0
     },
     {
-      className: 'built_in',
+      className: 'tsql-built_in',
       begin: '(' +
             '\\$PARTITION|' +
             '@@CONNECTIONS|' +
@@ -1059,6 +1059,7 @@ function(hljs) {
             'IDENTITY_COLUMNS|' +
             'INDEX_COLUMNS|' +
             'INDEXES|' +
+            'INFORMATION_SCHEMA|' +
             'INTERNAL_TABLES|' +
             'KEY_COLUMN_USAGE|' +
             'KEY_CONSTRAINTS|' +
@@ -1225,7 +1226,7 @@ function(hljs) {
             ')\\b'
     },
     {
-      className: 'literal',
+      className: 'tsql-literal',
       begin: '(' +
             'ALL|' +
             'AND|' +
@@ -1253,7 +1254,7 @@ function(hljs) {
             ')\\b'
     },
     {
-      className: 'function',
+      className: 'tsql-sp',
       begin: '(' +
             'SP_ADD_AGENT_PARAMETER|' +
             'SP_ADD_AGENT_PROFILE|' +
@@ -2641,21 +2642,21 @@ function(hljs) {
     },
     hljs.C_NUMBER_MODE,
     {
-      className: 'string',
+      className: 'tsql-string',
       begin: '\'',
       end: '\'',
       contains: [ {begin: '\'\''} ],
       relevance: 0
     },
     {
-      className: 'string',
+      className: 'tsql-string',
       begin: 'N\'',
       end: '\'',
       contains: [ {begin: '\'\''} ],
       relevance: 10
     },
     {
-      className: 'symbol',
+      className: 'tsql-symbol',
       variants: [
       {begin: '[a-z_@#][a-z0-9@$#_]*'},
       {begin: '\\[', end: ']', contains: [ {begin: ']]'} ]},

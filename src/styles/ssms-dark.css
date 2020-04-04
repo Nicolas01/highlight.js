@@ -1,0 +1,50 @@
+/*
+
+Microsoft SQL Server Management Studio (SSMS)-like style by David Simner <david.simner@red-gate.com>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #1E1E1E;
+  color: #9B9B9B; /* dark grey */
+}
+
+.hljs-keyword {
+  color: #569CD6; /* blue */
+}
+
+.hljs-symbol {
+  color: #DCDCDC; /* white */
+}
+
+.hljs-type {
+  color: #B9E873; /* light green */
+}
+
+.hljs-string {
+  color: #CB4141; /* red */
+}
+
+.hljs-number {
+  color: #B5CEA8; /* pale green */
+}
+
+.hljs-built_in {
+  color: #C975D5; /* violet */
+}
+
+.hljs-function {
+  color: #B3725B; /* dark orange */
+}
+
+.hljs-comment {
+  color: #57A64A; /* green */
+}
+
+.hljs-meta {
+  background: #484848; /* dark grey */
+  color: #C8C8C8; /* light grey */
+}

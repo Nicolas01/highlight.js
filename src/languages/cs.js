@@ -7,7 +7,7 @@ Category: common
 */
 
 function(hljs) {
-  
+
   var KEYWORDS = {
     keyword:
       // Normal keywords.
@@ -25,7 +25,7 @@ function(hljs) {
     symbol:
       'if else return'
   };
-  
+
   var NUMBERS = {
     className: 'number',
     variants: [
@@ -35,13 +35,13 @@ function(hljs) {
     ],
     relevance: 0
   };
-  
+
   var VERBATIM_STRING = {
     className: 'string',
     begin: '@"', end: '"',
-    contains: [{begin: '""'}]
+    contains: [{ begin: '""' }]
   };
-  var VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, {illegal: /\n/});
+  var VERBATIM_STRING_NO_LF = hljs.inherit(VERBATIM_STRING, { illegal: /\n/ });
   var SUBST = {
     className: 'subst',
     begin: '{', end: '}',
@@ -53,21 +53,21 @@ function(hljs) {
       }
     ]
   };
-  var SUBST_NO_LF = hljs.inherit(SUBST, {illegal: /\n/});
+  var SUBST_NO_LF = hljs.inherit(SUBST, { illegal: /\n/ });
   var INTERPOLATED_STRING = {
     className: 'string',
     begin: /\$"/, end: '"',
     illegal: /\n/,
-    contains: [{begin: '{{'}, {begin: '}}'}, hljs.BACKSLASH_ESCAPE, SUBST_NO_LF]
+    contains: [{ begin: '{{' }, { begin: '}}' }, hljs.BACKSLASH_ESCAPE, SUBST_NO_LF]
   };
   var INTERPOLATED_VERBATIM_STRING = {
     className: 'string',
     begin: /\$@"/, end: '"',
-    contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST]
+    contains: [{ begin: '{{' }, { begin: '}}' }, { begin: '""' }, SUBST]
   };
   var INTERPOLATED_VERBATIM_STRING_NO_LF = hljs.inherit(INTERPOLATED_VERBATIM_STRING, {
     illegal: /\n/,
-    contains: [{begin: '{{'}, {begin: '}}'}, {begin: '""'}, SUBST_NO_LF]
+    contains: [{ begin: '{{' }, { begin: '}}' }, { begin: '""' }, SUBST_NO_LF]
   });
   var STRING = {
     variants: [
@@ -78,7 +78,7 @@ function(hljs) {
       hljs.QUOTE_STRING_MODE
     ]
   };
-  
+
   // Type, Type?, Type[], Type<int>, Type<Type>, Type<Type<int, Type>>
   var TYPE_IDENT_RE = '[A-Z]\\w*' + '\\??(<' + hljs.IDENT_RE + '[<>a-zA-Z\\[\\]\\?\\ ,]*>)?(\\[\\])?';
   var TYPE_IDENT_MODE = {
@@ -129,7 +129,7 @@ function(hljs) {
               contains: [
                 hljs.QUOTE_STRING_MODE,
                 {
-                  className: 'name',
+                  className: 'attribute',
                   begin: ' [a-z]+', end: '=', excludeEnd: true,
                 }
               ]
@@ -143,29 +143,29 @@ function(hljs) {
         className: 'meta',
         begin: '#', end: '$',
         contains: [{
-            className: 'meta-keyword',
-            begin: '[A-Z]+'
-          }]
+          className: 'meta-keyword',
+          begin: '[A-Z]+'
+        }]
       },
       STRING,
       NUMBERS,
       {
         beginKeywords: 'namespace', end: '{',
         contains: [{
-            className: 'class', // namespace
-            begin: '[A-Z]\\w*'
-          }]
+          className: 'class', // namespace
+          begin: '[A-Z]\\w*'
+        }]
       },
       {
         beginKeywords: 'class interface', end: '{',
-        contains: [ TYPE_IDENT_MODE ]
+        contains: [TYPE_IDENT_MODE]
       },
       {
         // Type _varName
         // Type PropertyName
         className: 'typeandvar',
         begin: '\\b' + TYPE_IDENT_RE + ' [_a-zA-Z]\\w*', returnBegin: true,
-        contains: [ TYPE_IDENT_MODE ]
+        contains: [TYPE_IDENT_MODE]
       },
       {
         // [Attributes("")]
@@ -182,14 +182,14 @@ function(hljs) {
         begin: 'new ', excludeBegin: true,
         end: '[\\({]', excludeEnd: true,
         keywords: KEYWORDS,
-        contains: [ TYPE_IDENT_MODE ]
+        contains: [TYPE_IDENT_MODE]
       },
       {
         // as Type
         className: 'as',
         begin: ' as ', excludeBegin: true, end: ';',
         keywords: KEYWORDS,
-        contains: [ TYPE_IDENT_MODE ]
+        contains: [TYPE_IDENT_MODE]
       },
       {
         // using
@@ -215,7 +215,7 @@ function(hljs) {
             begin: '<', excludeBegin: true,
             end: '>', excludeEnd: true,
             keywords: KEYWORDS,
-            contains: [ TYPE_IDENT_MODE ]
+            contains: [TYPE_IDENT_MODE]
           }
         ]
       },
@@ -227,7 +227,7 @@ function(hljs) {
           {
             begin: '\\(', excludeBegin: true,
             end: '\\)', excludeEnd: true,
-            contains: [ TYPE_IDENT_MODE ]
+            contains: [TYPE_IDENT_MODE]
           }
         ]
       },
@@ -242,7 +242,7 @@ function(hljs) {
         className: 'static',
         begin: '[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\.', returnBegin: true,
         keywords: KEYWORDS,
-        contains: [ TYPE_IDENT_MODE ]
+        contains: [TYPE_IDENT_MODE]
       }
     ]
   };

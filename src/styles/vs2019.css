@@ -8,12 +8,17 @@
   overflow-x: auto;
   padding: 0.5em;
   background: #1E1E1E;
+}
+
+.hljs,
+.hljs-subst,
+.hljs-meta-keyword {
   color: #DCDCDC;
 }
 
 .hljs-comment,
 .hljs-quote {
-  color: #57A64A; /* green */
+  color: #57A64A;
   font-style: italic;
 }
 .hljs-doctag {
@@ -21,71 +26,64 @@
 }
 
 .hljs-keyword,
-.hljs-literal { 
-  color: #569CD6; /* blue */
+.hljs-literal,
+.hljs-name /* xml tag name */ { 
+  color: #569CD6;
 }
 .hljs-link {
-  color: #569CD6; /* blue */
+  color: #569CD6;
   text-decoration: underline;
 }
 
 .hljs-symbol {
-  color: #D8A0DF; /* violet */
+  color: #D8A0DF;
 }
 
 .hljs-number {
-  color: #B5CEA8; /* pale green */
+  color: #B5CEA8;
 }
 
 .hljs-string,
 .hljs-meta-string {
-  color: #D69D85; /* pale orange */
-}
-
-.hljs-subst {
-  color: #DCDCDC; /* reset */
+  color: #D69D85;
 }
 
 .hljs-variable,
 .hljs-template-variable,
-.hljs-name,
 .hljs-builtin-name,
 .hljs-params,
 .hljs-formula {
-  color: #9CDCFE; /* light blue */
+  color: #9CDCFE;
 }
 
 .hljs-attr,
 .hljs-attribute {
-  color: #92CAF4; /* light blue */
+  color: #92CAF4;
 }
 
 .hljs-function {
-  color: #DCDCAA; /* pale yellow */
+  color: #DCDCAA;
 }
 
 .hljs-class,
 .hljs-built_in,
 .hljs-type,
 .hljs-title {
-  color: #4EC9B0; /* green */
+  color: #4EC9B0;
 }
 
 .hljs-type {
-  color: #B8D7A3; /* light green */
+  color: #B8D7A3;
 }
 
 .hljs-meta,
 .hljs-tag {
-  color: #9B9B9B; /* dark grey */
-}
-.hljs-meta-keyword {
-  color: #DCDCDC; /* reset */
+  color: #9B9B9B;
 }
 
 .hljs-regexp,
 .hljs-template-tag {
-  color: #9A5334; /* dark red */
+  color: #9A5334;
 }
 
 .hljs-section {
@@ -106,38 +104,39 @@
 .hljs-selector-class,
 .hljs-selector-attr,
 .hljs-selector-pseudo {
-  color: #D7BA7D; /* yellow */
+  color: #D7BA7D;
 }
 
 .hljs-addition {
-  background-color: #144212; /* dark green */
+  background-color: #144212;
   display: inline-block;
   width: 100%;
 }
 
 .hljs-deletion {
-  background-color: #600; /* dark red */
+  background-color: #600;
   display: inline-block;
   width: 100%;
 }
 
-/* tsql class */
+/**** tsql class ****/
 .hljs-tsql-literal {
-  color: #9B9B9B; /* dark grey */
+  color: #9B9B9B;
 }
 
 .hljs-tsql-symbol {
-  color: #DCDCDC; /* white */
+  color: #DCDCDC;
 }
 
 .hljs-tsql-string {
-  color: #CB4141; /* red */
+  color: #CB4141;
 }
 
 .hljs-tsql-built_in {
-  color: #C975D5; /* violet */
+  color: #C975D5;
 }
 
 .hljs-tsql-sp {
-  color: #B3725B; /* dark orange */
+  color: #B3725B;
 }
+/********************/

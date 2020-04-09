@@ -82,29 +82,34 @@ function(hljs) {
   // Type, Type?, Type[], Type<int>, Type<Type>, Type<Type<int, Type>>
   var TYPE_IDENT_RE = '[A-Z]\\w*' + '\\??(<' + hljs.IDENT_RE + '[<>a-zA-Z\\[\\]\\?\\ ,]*>)?(\\[\\])?';
   var TYPE_IDENT_MODE = {
-    begin: TYPE_IDENT_RE, returnBegin: true,
+    begin: TYPE_IDENT_RE, returnBegin: true, relevance: 0,
     contains: [
       {
         className: 'type', // interface
-        begin: 'I[A-Z]\\w*'
+        begin: 'I[A-Z]\\w*',
+        relevance: 0
       },
       {
         className: 'class',
-        begin: '[A-Z]\\w*'
+        begin: '[A-Z]\\w*',
+        relevance: 0
       },
       {
         begin: '<', excludeBegin: true,
         end: '>', excludeEnd: true,
+        relevance: 0,
         keywords: KEYWORDS,
         contains: [
           {
             className: 'type', // interface
             begin: 'I[A-Z]\\w*',
+            relevance: 0,
             keywords: KEYWORDS
           },
           {
             className: 'class',
             begin: '[A-Z]\\w*',
+            relevance: 0,
             keywords: KEYWORDS
           }
         ]
@@ -159,6 +164,7 @@ function(hljs) {
     // Type PropertyName
     className: 'typeandvar',
     begin: '\\b' + TYPE_IDENT_RE + ' [_a-zA-Z]\\w*', returnBegin: true,
+    relevance: 0,
     contains: [TYPE_IDENT_MODE]
   };
 
@@ -205,14 +211,17 @@ function(hljs) {
     // Method<Type>(
     className: 'method-re',
     begin: '[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\(', returnBegin: true,
+    relevance: 0,
     contains: [
       {
         className: 'function', // method name
-        begin: '[A-Z]\\w*'
+        begin: '[A-Z]\\w*',
+        relevance: 0,
       },
       {
         begin: '<', excludeBegin: true,
         end: '>', excludeEnd: true,
+        relevance: 0,
         keywords: KEYWORDS,
         contains: [TYPE_IDENT_MODE]
       }
@@ -223,10 +232,12 @@ function(hljs) {
     // (Type)
     className: 'cast',
     begin: '\\(' + TYPE_IDENT_RE + '\\)', returnBegin: true,
+    relevance: 0,
     contains: [
       {
         begin: '\\(', excludeBegin: true,
         end: '\\)', excludeEnd: true,
+        relevance: 0,
         contains: [TYPE_IDENT_MODE]
       }
     ]
@@ -236,6 +247,7 @@ function(hljs) {
     // variableName
     className: 'variable',
     begin: '\\b[a-z]\\w*',
+    relevance: 0,
     keywords: KEYWORDS
   };
 
@@ -243,6 +255,7 @@ function(hljs) {
     // static class: Type. Type<T>.
     className: 'static',
     begin: '\\s[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\.', returnBegin: true,
+    relevance: 0,
     keywords: KEYWORDS,
     contains: [TYPE_IDENT_MODE]
   };

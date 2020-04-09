@@ -112,138 +112,163 @@ function(hljs) {
     ]
   };
 
+  var xml_doc = hljs.COMMENT('///', '$',
+    {
+      contains: [
+        {
+          className: 'doctag',
+          begin: '</?',
+          end: '>',
+          keywords: KEYWORDS,
+          contains: [
+            hljs.QUOTE_STRING_MODE,
+            {
+              className: 'attribute',
+              begin: ' [a-z]+', end: '=', excludeEnd: true,
+            }
+          ]
+        }
+      ]
+    }
+  );
+
+  var preprocessor_directives = {
+    className: 'meta',
+    begin: '#', end: '$',
+    contains: [{
+      className: 'meta-keyword',
+      begin: '[A-Z]+'
+    }]
+  };
+
+  var namespace = {
+    beginKeywords: 'namespace', end: '{',
+    contains: [{
+      className: 'class',
+      begin: '[A-Z]\\w*'
+    }]
+  };
+
+  var class_declaration = {
+    beginKeywords: 'class interface', end: '{',
+    contains: [TYPE_IDENT_MODE]
+  };
+
+  var var_declaration = {
+    // Type _varName
+    // Type PropertyName
+    className: 'typeandvar',
+    begin: '\\b' + TYPE_IDENT_RE + ' [_a-zA-Z]\\w*', returnBegin: true,
+    contains: [TYPE_IDENT_MODE]
+  };
+
+  var attribute = {
+    // [Attributes("")]
+    className: 'attribute-re', // attribute
+    begin: '^\\s*\\[', end: '\\]',
+    keywords: KEYWORDS,
+    contains: [
+      STRING,
+      TYPE_IDENT_MODE
+    ]
+  };
+
+  var object_instanciation = {
+    className: 'new',
+    begin: 'new ', excludeBegin: true,
+    end: '[\\({]', excludeEnd: true,
+    keywords: KEYWORDS,
+    contains: [TYPE_IDENT_MODE]
+  };
+
+  var as_usage = {
+    // as Type
+    className: 'as',
+    begin: ' as ', excludeBegin: true, end: ';',
+    keywords: KEYWORDS,
+    contains: [TYPE_IDENT_MODE]
+  };
+
+  var using_usage = {
+    // using
+    className: 'using',
+    begin: 'using', excludeBegin: true, end: '[\\(;]',
+    contains: [
+      {
+        className: 'class',
+        begin: '[A-Z]\\w*'
+      }
+    ]
+  };
+
+  var method_name = {
+    // Method<Type>(
+    className: 'method-re',
+    begin: '[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\(', returnBegin: true,
+    contains: [
+      {
+        className: 'function', // method name
+        begin: '[A-Z]\\w*'
+      },
+      {
+        begin: '<', excludeBegin: true,
+        end: '>', excludeEnd: true,
+        keywords: KEYWORDS,
+        contains: [TYPE_IDENT_MODE]
+      }
+    ]
+  };
+
+  var type_surrounded_by_parenthesis = {
+    // (Type)
+    className: 'cast',
+    begin: '\\(' + TYPE_IDENT_RE + '\\)', returnBegin: true,
+    contains: [
+      {
+        begin: '\\(', excludeBegin: true,
+        end: '\\)', excludeEnd: true,
+        contains: [TYPE_IDENT_MODE]
+      }
+    ]
+  };
+
+  var var_name = {
+    // variableName
+    className: 'variable',
+    begin: '\\b[a-z]\\w*',
+    keywords: KEYWORDS
+  };
+
+  var static_class = {
+    // static class: Type. Type<T>.
+    className: 'static',
+    begin: '\\s[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\.', returnBegin: true,
+    keywords: KEYWORDS,
+    contains: [TYPE_IDENT_MODE]
+  };
+
   return {
     aliases: ['csharp', 'c#'],
     keywords: KEYWORDS,
     illegal: /::/,
     contains: [
-      hljs.COMMENT(
-        '///', '$',
-        {
-          contains: [
-            {
-              className: 'doctag',
-              begin: '</?',
-              end: '>',
-              keywords: KEYWORDS,
-              contains: [
-                hljs.QUOTE_STRING_MODE,
-                {
-                  className: 'attribute',
-                  begin: ' [a-z]+', end: '=', excludeEnd: true,
-                }
-              ]
-            }
-          ]
-        }
-      ),
+      xml_doc,
       hljs.C_LINE_COMMENT_MODE,
       hljs.C_BLOCK_COMMENT_MODE,
-      {
-        className: 'meta',
-        begin: '#', end: '$',
-        contains: [{
-          className: 'meta-keyword',
-          begin: '[A-Z]+'
-        }]
-      },
+      preprocessor_directives,
       STRING,
       NUMBERS,
-      {
-        beginKeywords: 'namespace', end: '{',
-        contains: [{
-          className: 'class', // namespace
-          begin: '[A-Z]\\w*'
-        }]
-      },
-      {
-        beginKeywords: 'class interface', end: '{',
-        contains: [TYPE_IDENT_MODE]
-      },
-      {
-        // Type _varName
-        // Type PropertyName
-        className: 'typeandvar',
-        begin: '\\b' + TYPE_IDENT_RE + ' [_a-zA-Z]\\w*', returnBegin: true,
-        contains: [TYPE_IDENT_MODE]
-      },
-      {
-        // [Attributes("")]
-        className: 'attribute-re', // attribute
-        begin: '^\\s*\\[', end: '\\]',
-        keywords: KEYWORDS,
-        contains: [
-          STRING,
-          TYPE_IDENT_MODE
-        ]
-      },
-      {
-        className: 'new',
-        begin: 'new ', excludeBegin: true,
-        end: '[\\({]', excludeEnd: true,
-        keywords: KEYWORDS,
-        contains: [TYPE_IDENT_MODE]
-      },
-      {
-        // as Type
-        className: 'as',
-        begin: ' as ', excludeBegin: true, end: ';',
-        keywords: KEYWORDS,
-        contains: [TYPE_IDENT_MODE]
-      },
-      {
-        // using
-        className: 'using',
-        begin: 'using', excludeBegin: true, end: '[\\(;]',
-        contains: [
-          {
-            className: 'class',
-            begin: '[A-Z]\\w*'
-          }
-        ]
-      },
-      {
-        // Method<Type>(
-        className: 'method-re',
-        begin: '[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\(', returnBegin: true,
-        contains: [
-          {
-            className: 'function', // method name
-            begin: '[A-Z]\\w*'
-          },
-          {
-            begin: '<', excludeBegin: true,
-            end: '>', excludeEnd: true,
-            keywords: KEYWORDS,
-            contains: [TYPE_IDENT_MODE]
-          }
-        ]
-      },
-      {
-        // (Type)
-        className: 'cast',
-        begin: '\\(' + TYPE_IDENT_RE + '\\)', returnBegin: true,
-        contains: [
-          {
-            begin: '\\(', excludeBegin: true,
-            end: '\\)', excludeEnd: true,
-            contains: [TYPE_IDENT_MODE]
-          }
-        ]
-      },
-      {
-        // variableName
-        className: 'variable',
-        begin: '\\b[a-z]\\w*',
-        keywords: KEYWORDS
-      },
-      {
-        // static class: Type. Type<T>.
-        className: 'static',
-        begin: '[A-Z]\\w*(<' + hljs.IDENT_RE + '(\\s*,\\s*' + hljs.IDENT_RE + ')*>)?\\.', returnBegin: true,
-        keywords: KEYWORDS,
-        contains: [TYPE_IDENT_MODE]
-      }
+      namespace,
+      class_declaration,
+      var_declaration,
+      attribute,
+      object_instanciation,
+      as_usage,
+      using_usage,
+      method_name,
+      type_surrounded_by_parenthesis,
+      var_name,
+      static_class
     ]
   };
 }

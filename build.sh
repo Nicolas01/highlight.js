@@ -1,23 +1,26 @@
-# common: Apache, Bash, CoffeeScript, C++, C#, CSS, Diff, Go, HTTP, INI, Java, JavaScript, JSON, Kotlin, Less, Lua, 
-#         Makefile, Markdown, Nginx, Objective-C, Perl, PHP, plaintext, Properties, Python, Ruby, Rust, SCSS, Shell Session, 
-#         SQL, Swift, TypeScript, XML, YAML
+# common:
+# Apache, Bash, CoffeeScript, C++, C#, CSS, Diff, Go, HTTP, INI, Java, JavaScript, JSON, Kotlin,
+# Less, Lua, Makefile, Markdown, Nginx, Objective-C, Perl, PHP, plaintext, Properties, Python,
+# Ruby, Rust, SCSS, Shell Session, SQL, Swift, TypeScript, XML, YAML
 
 #node tools/build.js -t browser :common accesslog autohotkey dns dos django excel irc less powershell razor tex tsql typescript vbscript yaml
 
 node tools/build.js -t browser \
-accesslog apache autohotkey \
+accesslog apache autohotkey awk \
 bash \
 cpp cs css \
-diff django dos dns \
+diff django dns dockerfile dos \
 excel \
+fsharp \
+http \
 ini irc \
 javascript json \
 less \
-markdown \
+makefile markdown \
 nginx \
-php plaintext powershell properties \
+perl pgsql php plaintext powershell properties python \
 razor ruby \
-scss sql \
+scss shell sql \
 tex tsql typescript \
 vbscript \
 xml \
